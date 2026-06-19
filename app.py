@@ -71,7 +71,7 @@ async def generate(request: Request):
 embedding_function = embedding_functions.OpenAIEmbeddingFunction(
     api_key=DEEPSEEK_API_KEY,
     api_base="https://api.deepseek.com/v1",
-    model_name="deepseek-embedding"
+    model_name="bge-large-zh"
 )
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
 try:
