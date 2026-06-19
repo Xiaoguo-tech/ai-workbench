@@ -19,6 +19,7 @@ from chromadb.utils import embedding_functions
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 import pdfplumber
 import tiktoken
+os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 
 # ========== 配置 ==========
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
@@ -68,10 +69,8 @@ async def generate(request: Request):
     return StreamingResponse(stream(), media_type="text/event-stream")
 
 # ---------- 项目二：RAG ----------
-embedding_function = embedding_functions.OpenAIEmbeddingFunction(
-    api_key=DEEPSEEK_API_KEY,
-    api_base="https://api.deepseek.com/v1",
-    model_name="bge-large-zh"
+embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
+    model_name="all-MiniLM-L6-v2"
 )
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
 try:
